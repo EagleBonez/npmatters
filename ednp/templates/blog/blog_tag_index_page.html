@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block body_class %}template-blogtagindexpage{% endblock %}
+
+{% block content %}
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+
+      <!-- Blog Entries Column -->
+      <div class="col-md-8">
+
+        <h1 class="my-4">{{ page.title }}</h1>
+
+    {% if request.GET.tag|length %}
+        <h4>Showing blog posts tagged <strong>"{{ request.GET.tag }}"</strong></h4>
+    {% endif %}
+
+
+
+        <!-- Blog blogpage -->
+
+           {% for blogpage in blogpages %}
+    {% with blogpage=blogpage.specific %}
+
+        <div class="card mb-4">
+          {% with blogpage.main_image as main_image %}
+            {% if main_image %}
+            <img class="img-fluid">
+               {% image main_image fill-729x300 %}
+            </img>
+          {% endif %}
+        {% endwith %}
+
+          <div class="card-body">
+            <h2 class="card-title"><a href="{% pageurl blogpage %}">{{ blogpage.title }}</a></h2>
+            <p class="card-text">{{ blogpage.intro }}</p>
+            <a href="{% pageurl blogpage %}" class="btn btn-primary">Read More &rarr;</a>
+          </div>
+          <div class="card-footer text-muted">
+            <p>Posted on {{ blogpage.date }}</p>
+
+          </div>
+        </div>
+ {% endwith %}
+{% endfor %}
+</div>
+
+
+
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+
+        <!-- Search Widget -->
+ <!--       <div class="card my-4">
+          <h5 class="card-header">Search</h5>
+          <div class="card-body">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>-->
+
+
+
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  {% endblock %}

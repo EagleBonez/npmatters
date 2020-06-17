@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-staticindexpage{% endblock %}
+
+{% block content %}
+
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+
+      <!-- Blog Entries Column -->
+      <div class="col-md-8">
+
+        <h1 class="my-4">{{ page.title }}</h1>
+          <p>{{ page.intro | safe }}</p>
+
+
+        <!-- Blog Post -->
+
+        {% for post in posts %}
+    {% with post=post.specific %}
+
+        <div class="card mb-4">
+          {% with post.main_image as main_image %}
+            {% if main_image %}
+               <img class="image-fluid">
+               {% image main_image fill-729x300 %}
+               </img>
+          {% endif %}
+        {% endwith %}
+
+          <div class="card-body">
+            <h2 class="card-title"><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+            <p class="card-text">{{ post.intro | safe}}</p>
+            <a href="{% pageurl post %}" class="btn btn-primary">Read More &rarr;</a>
+          </div>
+          <!--<div class="card-footer text-muted">
+            Posted on {{ post.date }}
+
+          </div>-->
+        </div>
+ {% endwith %}
+{% endfor %}
+
+<!-- Pagination -->
+  {# Only show pagination if there is more than one page to click through #}
+
+        <ul class="pagination justify-content-center mb-4">
+          {% if posts.paginator.num_pages > 1 %}
+          {% if posts.has_previous %}
+          <li class="page-item">
+            <a href="?page={{ posts.previous_page_number }}" class="page-link">&larr; Prev</a>
+          </li>
+          <li class="page-item disabled">
+             </a>
+          </li>
+          {% endif %}
+
+            {% for page_num in posts.paginator.page_range %}
+             <li class="page-item {% if page_num == posts.number %} active{% endif %}">
+                <a href="?page={{ page_num }}" class="page-link">{{ page_num }}</a>
+              </li>
+            {% endfor %}
+
+
+              {% if posts.has_next %}
+              <li class="page-item">
+                <a href="?page={{ posts.next_page_number }}" class="page-link">More &rarr;</a>
+              </li>
+            {% endif %}
+            {% endif %}
+        </ul>
+
+      </div>
+
+
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+
+        <!-- Search Widget -->
+ <!--       <div class="card my-4">
+          <h5 class="card-header">Search</h5>
+          <div class="card-body">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>-->
+
+        <!-- Categories Widget -->
+  <!--      <div class="card my-4">
+          <h5 class="card-header">Tags</h5>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="#">Web Design</a>
+                  </li>
+                  <li>
+                    <a href="#">HTML</a>
+                  </li>
+                  <li>
+                    <a href="#">Freebies</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="#">JavaScript</a>
+                  </li>
+                  <li>
+                    <a href="#">CSS</a>
+                  </li>
+                  <li>
+
+                    <a href="#">Tutorials</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>-->
+
+        <!-- Side Widget -->
+      <!--<div class="card my-4">
+          <h5 class="card-header">Side Widget</h5>
+          <div class="card-body">
+            You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+          </div>
+        </div>-->
+
+      </div>
+
+    <div>
+        <p style="text-align:right;"><a href="{{ page.get_parent.url }}">&larr; Back</a></p>
+    </div>
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  {% endblock %}
+

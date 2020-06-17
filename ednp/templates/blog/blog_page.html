@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block body_class %}template-blogpage{% endblock %}
+{% block content %}
+
+{% load static %}
+
+<head>
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@np_things" />
+  <meta name="twitter:title" content="{{ page.title }}" />
+  <meta name="twitter:description" content="{{ page.intro }}" />
+  <meta name="twitter:image" content="https://www.neighbourhood-planning.co.uk/media/images/Screenshot 2020-06-14 at 21.10.35.png" />
+
+</head>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-sm-8">
+
+        <!-- Title -->
+        <h1 class="mt-4">{{ page.title }}</h1>
+
+        <!-- Author -->
+        <p class="lead">
+          by
+          <a href="{% slugurl 'about' %}">Ed Dade</a>
+        </p>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <p>Posted on {{ page.date }}</p>
+
+        <hr>
+
+        <p>{{ page.intro }}</p>
+
+        <!-- Preview Image -->
+
+          {% for item in page.gallery_images.all %}
+        <picture>
+         <img  class="img-fluid">
+            {% image item.image fill-600x300 %}
+        </picture>
+        </figure>
+            <p>{{ item.caption }}</p>
+
+         {% endfor %}
+
+
+
+
+        <!-- Post Content -->
+        <p class="lead">
+
+        {% for block in page.body %}
+         {% include_block block %}
+         {% endfor %}
+        </p>
+        <p style="text-align:right;"><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+        <hr>
+
+        <!-- Comments Form -->
+        <div class="card my-4">
+          <h5 class="card-header">Leave a Comment:</h5>
+          <div class="card-body">
+                <form action="." method="post">
+                     <div class="form-group">
+                        {% if new_comment %}
+                       <div class="alert alert-success"><strong>Success!</strong> Your comment is awaiting approval.</div>
+                       {% else %}
+                        {{ comment_form|crispy }}
+                        {% csrf_token %}
+                        <!-- Hidden input for parent comment.id -->
+                        <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                        <input class="btn btn-primary" type="submit" value="Submit">
+                  </form>
+                  {% endif %}
+          </div>
+        </div>
+        </div>
+      <h3>Comments</h3>
+      <hr>
+
+
+        <!-- Comment with nested comments -->
+        {% for comment in comments %}
+        <div class="media mb-4">
+          <div style="font-size: 3rem; padding-right: 10px;"<i class="fa fa-user-circle"></i></div>
+          <div class="media-body">
+            <h5 class="mt-0">{{ comment.name }} | {{ comment.created_on }}</h5>
+            {{ comment.body | linebreaks }}
+            <div id="myDIV2"><input class="btn btn-primary" type="submit" value="reply" onclick="myFunction()"></div>
+
+
+      <!-- reply form -->
+          <div id="myDIV" style="display:none;">
+        <form action="." method="post">
+            {{ comment_form | crispy}}
+            {% csrf_token %}
+            <!-- Hidden input for parent comment.id -->
+            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+            <input class="btn btn-primary" type="submit" value="submit">
+        </form>
+
+
+        </div>
+
+          <!--/.reply form -->
+
+          {% for reply in comment.replies.all %}
+            <!-- reply-->
+            <div class="media mt-4">
+              <div style="font-size: 3rem; padding-right: 10px;"<i class="fa fa-user-circle"></i></div>
+              <div class="media-body">
+                <h5 class="mt-0">{{ reply.name }} | {{ reply.created_on }}</h5>
+                {{ reply.body }}
+                </div>
+            </div>
+            <!--/.reply-->
+
+
+            {% endfor %}
+
+
+
+
+              </div>
+            </div>
+    {% empty %}
+    <h5>No comments</h5>
+    {% endfor %}
+
+          </div>
+
+
+
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-sm-4">
+
+        <!-- Search Widget -->
+  <!--      <div class="card my-4">
+          <h5 class="card-header">Search</h5>
+          <div class="card-body">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>-->
+
+        <!-- Categories Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Tags</h5>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <ul class="list-unstyled mb-0">
+              {% if page.tags.all.count %}
+
+                  {% for tag in page.tags.all %}
+                  <li><span class="badge badge-light"><a href="{% slugurl 'tags' %}?tag={{ tag }}">{{ tag }}</a></span></li>
+                  {% endfor %}
+               {% endif %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+    </div>
+
+
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+
+
+
+{% endblock %}

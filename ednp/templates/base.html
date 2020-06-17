@@ -1,0 +1,118 @@
+{% load static wagtailuserbar %}
+{% load wagtailcore_tags %}
+{% load static %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+          <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Edward Dade Neighbourhood Planning Services - blog, professional services and online resources to support neighbourhood planning.">
+  <meta name="author" content="Ed Dade">
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@np_things" />
+  <meta name="twitter:title" content="Edward Dade Neighbourhood Planning Services" />
+  <meta name="twitter:description" content="Blog, professional services and online resources to support neighbourhood planning." />
+  <meta name="twitter:image" content="https://www.neighbourhood-planning.co.uk/media/images/Screenshot 2020-06-14 at 21.10.35.png" />
+        <title>
+            {% block title %}
+                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% with self.get_site.site_name as site_name %}
+                    {% if site_name %}- {{ site_name }}{% endif %}
+                {% endwith %}
+            {% endblock %}
+
+        </title>
+
+        {# Global stylesheets #}
+
+
+   <!-- Bootstrap core CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/business-frontpage.css' %}" rel="stylesheet">
+  <link href="{% static 'css/blog-index-page.css' %}" rel="stylesheet">
+  <link href="{% static 'css/blog-tag-index-page.css' %}" rel="stylesheet">
+  <link href="{% static 'css/blog-post.css' %}" rel="stylesheet">
+  <link href="{% static 'css/home.css' %}" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/ednp.css' %}">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+  <!--<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script> js for sortable table -->
+
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+
+        {% endblock %}
+    </head>
+
+    <body class="{% block body_class %}{% endblock %}">
+
+  <div>
+
+      <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="{% slugurl 'home' %}">neighbourhood-planning.co.uk</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% slugurl 'home' %}">Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% slugurl 'blog' %}">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% slugurl 'services' %}">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% slugurl 'about' %}">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    </div>
+
+
+
+
+        {% wagtailuserbar %}
+
+        {% block content %}{% endblock %}
+
+    <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; EDNPS | <a href="{% slugurl 'privacy-policy' %}">Privacy Policy</a></p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+
+
+        {# Global javascript #}
+        <script type="text/javascript" src="{% static 'js/ednp.js' %}"></script>
+
+        {% block extra_js %}
+            {# Override this in templates to add extra javascript #}
+              <!-- Bootstrap core JavaScript -->
+
+            <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+            <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+            <script src="{% static 'js/blog-post.js' %}"></script>
+
+        {% endblock %}
+
+
+    </body>
+</html>

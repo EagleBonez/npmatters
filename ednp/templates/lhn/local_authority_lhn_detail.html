@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<!-- Page Content -->
+<div class="container">
+   <div class="row">
+      <!-- Post Content Column -->
+      <div class="col-sm-8">
+         <!-- Title -->
+         <h1 class="mt-4">{{ localauthoritylhn.la_area }}'s Local Housing Need</h1>
+         </h1>
+         <hr>
+         <!-- Date/Time -->
+         <p><strong>LA area: {{ localauthoritylhn.la_area }} | ONS area code: {{ localauthoritylhn.la_code }} | County: <a href="{{ localauthoritylhn.county.get_absolute_url }}">{{ localauthoritylhn.county }}</a></strong></p>
+         <hr>
+         <p>
+             The data shows the Local Housing Need figure for {{ localauthoritylhn.la_area }} - for the current year
+             and in previous years, <i>using the relevant data at that point in time.</i>
+             The <strong>Household change (10 years)</strong> column calculates household growth over a 10 year period from the base year.
+             The <strong>Adjustment factor</strong> has been calculated using the most recently available median affordability ratio figure - <i>at that time</i>.<br /><br />
+             No cap has been applied to the Local Housing Need figures presented. Figures shown are rounded.<br /><br />
+             Sort the table by clicking column headings.
+         </p>
+
+
+         <!-- Post Content -->
+         <p class="lead">
+            <h3>{{ localauthoritylhn.la_area }} LHN data</h3>
+         <table class="table table-hover sortable">
+            <thead>
+               <tr>
+                  <th>Year</th>
+                  <th style="text-align:center">Household change<br />(10 yrs)</th>
+                  <th style="text-align:center">Adjustment factor</th>
+                  <th style="text-align:center">Annual Local Housing Need</th>
+               </tr>
+            </thead>
+            <tbody id="myTableBody">
+                <tr>
+                  <td>2020</td>
+                  <td style="text-align:center">{{ localauthoritylhn.projected_household_growth_2020 | floatformat:0 }}</td>
+                  <td style="text-align:center">{{ localauthoritylhn.adj_factor_2020 | floatformat:3 }}</td>
+                  <td style="text-align:center">{{ localauthoritylhn.lhn_2020 | floatformat:0 }}</td>
+                </tr>
+                <tr>
+                  <td>2019</td>
+                  <td style="text-align:center">{{ localauthoritylhn.projected_household_growth_2019 | floatformat:0 }}</td>
+                  <td style="text-align:center">{{ localauthoritylhn.adj_factor_2019 | floatformat:3 }}</td>
+                  <td style="text-align:center">{{ localauthoritylhn.lhn_2019 | floatformat:0 }}</td>
+                </tr>
+
+               <tr>
+                  <td>2018</td>
+                  <td style="text-align:center">{{ localauthoritylhn.projected_household_growth_2018 | floatformat:0 }}</td>
+                  <td style="text-align:center">{{ localauthoritylhn.adj_factor_2018 | floatformat:3 }}</td>
+                  <td style="text-align:center">{{ localauthoritylhn.lhn_2018 | floatformat:0 }}</td>
+                </tr>
+
+            </tbody>
+         </table>
+
+         </p>
+         <br /><br />
+         <p style="text-align:right;"><a href="/lhn/">&larr; Back</a></p>
+         <hr>
+      </div>
+      <!-- Sidebar Widgets Column -->
+      <div class="col-sm-4">
+
+      </div>
+   </div>
+</div>
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+{% endblock %}

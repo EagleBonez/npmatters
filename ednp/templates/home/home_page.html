@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load static %}
+{% block body_class %}template-homepage{% endblock %}
+
+ {% block content %}
+
+  <!-- Header -->
+  <header class="bg-primary py-5 mb-5">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-sm-12">
+          <h1 class="display-4 text-white mt-5 mb-2">Neighbour<br class="rwd-break">hood Planning Services </h1>
+          <p class="lead mb-5 text-white-50">
+
+            Professional services and online resources to support your plan
+
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+      <div class="col-sm-8 mb-5">
+        <h2>Edward Dade MRTPI <br />Planning Consultant</h2>
+        <hr>
+        <p>Ed is a chartered member of the Royal Town Planning Institute with specialist knowledge of neighbourhood planning, offering professional planning consultancy services and other technical assistance to support the preparation of Neighbourhood Plans.</p>
+        <p>The Neighbourhood Planning Services  website provides online resources including a <a href="{% slugurl 'blog' %}">blog</a>, <em><a href="/planfinder">Planfinder</a></em> app, and other <a href="{% slugurl 'services' %}">tools</a> to assist communities in preparing their Neighbourhood Plans.</p>
+        <a class="btn btn-primary btn-lg" href="/planfinder">Read more &raquo;</a>
+      </div>
+      <div class="col-sm-4 mb-5">
+        <h2>Contact</h2>
+        <hr>
+        <strong>Neighbourhood Planning Services</strong>
+        <address>
+          <abbr title="Phone">P:</abbr>
+          07946 894587
+          <br>
+          <abbr title="Email">E:</abbr>
+          <a href="mailto:#">info@neighbourhood-planning.co.uk</a>
+        </address>
+      </div>
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+      <div class="col-sm-4 mb-5">
+        <div class="card h-100">
+          <img class="card-img-top" src="media/images/computer-desk-electronics-keyboard-238118.jpg" alt="">
+          <div class="card-body">
+            <h4 class="card-title">Blog</h4>
+            <p class="card-text">The latest posts from the Neighbourhood Planning Matters blog.</p>
+          </div>
+          <div class="card-footer">
+            <a href="{% slugurl 'blog' %}" class="btn btn-primary">Read more &raquo;</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 mb-5">
+        <div class="card h-100">
+          <img class="card-img-top" src="media/images/black-binoculars-55804.jpg" alt="">
+          <div class="card-body">
+            <h4 class="card-title">Planfinder</h4>
+            <p class="card-text">Search the directory of 'made' Neighbourhood Plans using the Planfinder.</p>
+          </div>
+          <div class="card-footer">
+            <a href="/planfinder/" class="btn btn-primary">Read more &raquo;</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 mb-5">
+        <div class="card h-100">
+          <img class="card-img-top" src="media/images/stainless-steel-close-wrench-on-spanner-210881.jpg" alt="">
+          <div class="card-body">
+            <h4 class="card-title">Tools & Services</h4>
+            <p class="card-text">View online tools and find details of professionals services offered.</p>
+          </div>
+          <div class="card-footer">
+            <a href="{% slugurl 'services' %}" class="btn btn-primary">Read more &raquo;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+{% endblock %}

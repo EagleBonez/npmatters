@@ -1,0 +1,59 @@
+
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<!-- Page Content -->
+<div class="container">
+   <div class="row">
+      <!-- Post Content Column -->
+      <div class="col-sm-8">
+         <!-- Title -->
+         <h1 class="mt-4">Local Housing Need - LAs in {{ county.name }}</h1>
+         </h1>
+         <hr>
+         <!-- Date/Time -->
+         <p>Compare Local Housing Need figures for all local authority areas in {{ county.name }}.</p>
+         <hr>
+         <p>The table shows Local Housing Need figures for the current and previous years, for all
+         local authority areas in {{ county.name }}. Local Housing Need has been calculated using the government's
+         <a href="https://www.gov.uk/guidance/housing-and-economic-development-needs-assessments">standard method</a>. Note that no cap has been applied.<br /><br />
+         Sort the table by clicking column headings.
+         </p>
+         <!-- Post Content -->
+         <p class="lead">
+            <h3>LHN for local authority areas in {{ county.name }}</h3>
+         <table class="table table-hover sortable">
+            <thead>
+               <tr>
+                  <th style="text-align:left">Local Authority</th>
+                  <th style="text-align:center">Annual LHN 2018</th>
+                  <th style="text-align:center">Annual LHN 2019</th>
+                  <th style="text-align:center">Annual LHN 2020</th>
+               </tr>
+            </thead>
+            <tbody id="myTableBody">
+               {% for la in county.localauthoritylhn_set.all %}
+               <tr>
+                  <td style="text-align:left"><a href="{{ la.get_absolute_url }}">{{ la.la_area }}</a></td>
+                  <td style="text-align:center">{{ la.lhn_2018 | floatformat:0 }}</td>
+                  <td style="text-align:center">{{ la.lhn_2019 | floatformat:0 }}</td>
+                  <td style="text-align:center">{{ la.lhn_2020 | floatformat:0 }}</td>
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+
+         </p>
+         <br /><br />
+         <p style="text-align:right;"><a href="/lhn/">&larr; Back</a></p>
+         <hr>
+      </div>
+      <!-- Sidebar Widgets Column -->
+      <div class="col-sm-4">
+
+      </div>
+   </div>
+</div>
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+{% endblock %}
+

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block body_class %}template-staticpage{% endblock %}
+{% block content %}
+
+<head>
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@np_things" />
+  <meta name="twitter:title" content="{{ page.title }}" />
+  <meta name="twitter:description" content="{{ page.intro }}" />
+  <meta name="twitter:image" content="https://www.neighbourhood-planning.co.uk/media/images/Screenshot 2020-06-14 at 21.10.35.png" />
+
+</head>
+
+<!-- Page Content -->
+<div class="container">
+   <div class="row">
+      <!-- Post Content Column -->
+      <div class="col-sm-8">
+         <!-- Title -->
+         <h1 class="mt-4">{{ page.title }}</h1>
+         <!-- Author -->
+         <p class="lead">
+            by
+            <a href="{% slugurl 'about' %}">Ed Dade</a>
+         </p>
+         <hr>
+         <!-- Date/Time -->
+         <!--<p>Posted on {{ page.date }}</p>-->
+         <p>{{ page.intro }}</p>
+         <!-- Preview Image -->
+         {% for item in page.gallery_images.all %}
+         <picture>
+            <img  class="img-fluid">
+            {% image item.image fill-600x300 %}
+         </picture>
+         </figure>
+         <p>{{ item.caption }}</p>
+         {% endfor %}
+         <!-- Post Content -->
+         <p class="lead">
+            {% for block in page.body %}
+            {% include_block block %}
+            {% endfor %}
+         </p>
+         <p style="text-align:right;"><a href="{{ page.get_parent.url }}">&larr; Back</a></p>
+         <hr>
+      </div>
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+         <!-- Search Widget -->
+         <!--<div class="card my-4">
+            <h5 class="card-header">Search</h5>
+            <div class="card-body">
+               <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                  <button class="btn btn-secondary" type="button">Go!</button>
+                  </span>
+               </div>
+            </div>
+         </div>-->
+      </div>
+   </div>
+</div>
+{% endblock %}

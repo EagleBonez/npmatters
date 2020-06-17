@@ -1,0 +1,3 @@
+User-Agent: *
+Disallow: /ednps-admin/
+Sitemap: https://www.neighbourhood-planning.co.uk/sitemap.xml

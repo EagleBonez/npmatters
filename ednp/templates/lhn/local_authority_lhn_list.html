@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+{% if localauthoritylhn_list %}
+<!-- Page Content -->
+<div class="container">
+   <div class="row">
+      <!-- Post Content Column -->
+      <div class="col-sm-8">
+         <!-- Title -->
+         <h1 class="mt-4">Database of Local Housing Need</h1>
+         </h1>
+         <!-- Author -->
+         <p class="lead">
+            by
+            <a href="/about">Ed Dade</a>
+         </p>
+         <hr>
+         <!-- Date/Time -->
+         <p>Local Housing Need data for local authority areas in England.</p>
+         <hr>
+         <p>
+             Local Housing Need is the government's <a href="https://www.gov.uk/guidance/housing-and-economic-development-needs-assessments">standard method</a>
+             for determining the number of new homes required to be built in each local planning authority area. The table below
+             presents the annual Local Housing Need figure for each local authority area for the current year and previous years. <br /><br />
+             LHN has been calculated using the ONS's 2014-based household projections. The local authorities listed represent
+             those described in the household projections data. Note that some local authorities and their
+             geographies have changed since publication.<br /><br />
+             For some local authorities, the annual LHN figure may be capped depending on the extent of increase
+             in the housing requirement. No cap has been applied in the data presented.
+            <ul>
+                 <li>Click a local authority name to view more info about how the LHN has been calculated for that area.</li>
+                 <li>Click a 'county' to compare all local authorities in the county.</li>
+                 <li>Sort the table by clicking headings.</li>
+            </ul>
+             </p>
+             <br />
+             <h3>Local Housing Need by local authority area</h3>
+         <!-- Post Content -->
+         <p class="lead">
+         <table class="table table-hover sortable">
+            <thead>
+               <tr>
+                  <th style="text-align:left">Local Authority</th>
+                  <th style="text-align:left">County</th>
+                  <th style="text-align:center">Annual LHN 2018</th>
+                  <th style="text-align:center">Annual LHN 2019</th>
+                  <th style="text-align:center">Annual LHN 2020</th>
+               </tr>
+            </thead>
+            <tbody id="myTableBody">
+               {% for la in localauthoritylhn_list %}
+               <tr>
+                  <td style="text-align:left"><a href="{{ la.get_absolute_url }}">{{ la.la_area }}</a></td>
+                  <td style="text-align:left"><a href="{{ la.county.get_absolute_url }}">{{ la.county }}</a></td>
+                  <td style="text-align:center">{{ la.lhn_2018 | floatformat:0 }}</td>
+                  <td style="text-align:center">{{ la.lhn_2019 | floatformat:0 }}</td>
+                  <td style="text-align:center">{{ la.lhn_2020 | floatformat:0 }}</td>
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+
+         <br />
+         <p>This data has been provided for information. It is advisable to contact the relevant
+         local authority to confirm the area's housing requirement. For questions or feedback, please contact <a href="mailto:info@neighbourhood-planning.co.uk">info@neighbourhood-planning.co.uk</a>.</p>
+         {% else %}
+         <p>There are no local authorities in database.</p>
+         {% endif %}
+         </p>
+         <br /><br />
+         <p style="text-align:right;"><a href="/">&larr; Back</a></p>
+         <hr>
+      </div>
+      <!-- Sidebar Widgets Column -->
+      <div class="col-sm-4">
+
+      </div>
+   </div>
+</div>
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+{% endblock %}
+
